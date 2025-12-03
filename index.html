@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주례 자동차검사소 QR 웨이팅 안내</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --primary: #2563eb;
+      --primary-light: #e0ecff;
+      --text-main: #111827;
+      --text-sub: #6b7280;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 16px 16px 24px;
+    }
+
+    /* 인트로 영역 */
+    #intro-container {
+      margin-top: 40px;
+      margin-bottom: 16px;
+      min-height: 100px;
+    }
+
+    #intro-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 20px;
+      background: var(--primary);
+      margin-left: 4px;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    header {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header h1 span.logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    header p {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .header-right {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 16px 14px;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .chip span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .menu-btn {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .menu-btn-main {
+      grid-column: 1 / -1;
+    }
+
+    .menu-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .menu-btn-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .menu-btn-desc {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h2 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .section > p.lead {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+
+    .timeline {
+      list-style: none;
+      margin-top: 8px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+
+    .timeline-step {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .timeline-content-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .timeline-content-body {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    .check-group {
+      margin-top: 8px;
+    }
+
+    .check-group-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .check-item {
+      font-size: 0.84rem;
+      color: var(--text-sub);
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .check-item input {
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #eff6ff;
+      font-size: 0.8rem;
+      color: #1d4ed8;
+    }
+
+    .question-block {
+      margin-top: 10px;
+    }
+
+    .question-block label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .question-block select {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      background: #fff;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 10px 11px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed #d1d5db;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .quiz-item {
+      margin-top: 8px;
+      padding: 8px 9px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    .quiz-item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .quiz-answer {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 8px 9px;
+      font-size: 0.85rem;
+      resize: vertical;
+    }
+
+    footer {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .back-link span {
+      font-size: 1rem;
+      line-height: 0;
+    }
+
+    #main-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #main-content.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(3px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+      .menu-btn-main {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- 인트로 타이핑 영역 -->
+  <div id="intro-container">
+    <div id="intro-text"></div>
+  </div>
+
+  <!-- 나머지 메인 콘텐츠 (인트로 끝나면 나타남) -->
+  <div id="main-content">
+    <header>
+      <h1>
+        <span class="logo">주</span>
+        주례 자동차검사소
+      </h1>
+      <div class="header-right">대기 중 안내 서비스</div>
+    </header>
+
+    <!-- 홈 카드 -->
+    <div class="card" id="home-card">
+      <div class="chip">
+        <span class="dot"></span>
+        대기 중 안내 메뉴
+      </div>
+      <p style="font-size:0.9rem; margin-bottom:8px;">
+        아래 메뉴에서 궁금한 내용을 선택해 보세요.
+      </p>
+
+      <div class="menu-grid">
+        <button class="menu-btn menu-btn-main" onclick="showSection('flow')">
+          <div class="menu-btn-title">오늘 검사 이렇게 진행돼요</div>
+          <div class="menu-btn-desc">검사 절차를 순서대로 한눈에 정리해 드립니다.</div>
+        </button>
+
+        <button class="menu-btn" onclick="showSection('checklist')">
+          <div class="menu-btn-title">대기 중 셀프 점검</div>
+          <div class="menu-btn-desc">오늘 검사에서 지적될 수 있는 부분을 미리 확인해 보세요.</div>
+        </button>
+
+        <button class="menu-btn" onclick="showSection('health')">
+          <div class="menu-btn-title">내 차 건강점수 셀프 진단</div>
+          <div class="menu-btn-desc">간단 설문으로 내 차 상태를 점검해 보세요.</div>
+        </button>
+
+        <button class="menu-btn" onclick="showSection('quiz')">
+          <div class="menu-btn-title">자동차 상식 OX 퀴즈</div>
+          <div class="menu-btn-desc">대기 시간에 가볍게 풀어보는 상식 퀴즈입니다.</div>
+        </button>
+
+        <button class="menu-btn menu-btn-main" onclick="showSection('feedback')">
+          <div class="menu-btn-title">한 줄 만족도 남기기</div>
+          <div class="menu-btn-desc">짧은 의견도 큰 도움이 됩니다 :)</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 섹션: 검사 절차 -->
+    <div class="card section" id="section-flow">
+      <div class="back-link" onclick="backHome()">
+        <span>←</span> 메뉴로 돌아가기
+      </div>
+      <h2>오늘 검사 이렇게 진행돼요</h2>
+      <p class="lead">검사 과정이 낯설고 불안하실 수 있어요. 아래 순서대로 차분히 진행되니 참고해 주세요 😊</p>
+
+      <ul class="timeline">
+        <li class="timeline-item">
+          <div class="timeline-step">1</div>
+          <div>
+            <div class="timeline-content-title">접수 및 번호 확인</div>
+            <div class="timeline-content-body">
+              차량번호와 소유자 정보를 확인하고, 검사 순서를 배정합니다.
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-step">2</div>
+          <div>
+            <div class="timeline-content-title">외관·하부 점검</div>
+            <div class="timeline-content-body">
+              차대 번호, 등화장치 작동 상태, 누유 여부, 부식 상태 등을 점검합니다.
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-step">3</div>
+          <div>
+            <div class="timeline-content-title">제동·조향·속도 검사</div>
+            <div class="timeline-content-body">
+              브레이크 작동력, 조향 안정성, 속도계 정확도 등을 장비로 측정합니다.
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-step">4</div>
+          <div>
+            <div class="timeline-content-title">배출가스 검사</div>
+            <div class="timeline-content-body">
+              매연·배출가스가 기준에 적합한지 확인해 환경 영향을 점검합니다.
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-step">5</div>
+          <div>
+            <div class="timeline-content-title">검사 결과 안내</div>
+            <div class="timeline-content-body">
+              합격/불합격 여부와 함께 향후 관리 팁을 안내해 드립니다. 궁금한 점은 언제든 질문해 주세요.
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="info-box">
+        👉 검사 과정 중 궁금한 점이 있으면, 가까이 있는 직원에게 편하게 말씀해 주세요.
+      </div>
+    </div>
+
+    <!-- 섹션: 체크리스트 -->
+    <div class="card section" id="section-checklist">
+      <div class="back-link" onclick="backHome()">
+        <span>←</span> 메뉴로 돌아가기
+      </div>
+      <h2>대기 중 셀프 점검 체크리스트</h2>
+      <p class="lead">
+        아래 항목 중 1~2개라도 해당되면, 오늘 검사에서 지적될 가능성이 있습니다.<br>
+        간단히 확인해 보세요.
+      </p>
+
+      <div class="check-group">
+        <div class="check-group-title">🔧 타이어 점검</div>
+        <label class="check-item">
+          <input type="checkbox"> 타이어 홈(트레드)이 거의 없다
+        </label>
+        <label class="check-item">
+          <input type="checkbox"> 한쪽만 많이 닳았다 (편마모)
+        </label>
+        <label class="check-item">
+          <input type="checkbox"> 공기압 경고등이 가끔 켜진다
+        </label>
+      </div>
+
+      <div class="check-group">
+        <div class="check-group-title">💡 등화장치 점검</div>
+        <label class="check-item">
+          <input type="checkbox"> 밤에 라이트 밝기가 좌우가 다른 것 같다
+        </label>
+        <label class="check-item">
+          <input type="checkbox"> 브레이크등이 잘 안 들어온다는 이야기를 들은 적이 있다
+        </label>
+      </div>
+
+      <div class="check-group">
+        <div class="check-group-title">💧 누유·냄새 점검</div>
+        <label class="check-item">
+          <input type="checkbox"> 주차장 바닥에 기름 자국을 본 적이 있다
+        </label>
+        <label class="check-item">
+          <input type="checkbox"> 시동 걸었을 때 평소와 다른 냄새가 난다
+        </label>
+      </div>
+
+      <div class="info-box">
+        👉 해당되는 항목이 있다면, 검사 결과를 들으실 때 미리 말씀해 주세요.<br>
+        보다 정확한 안내에 도움이 됩니다 🙂
+      </div>
+    </div>
+
+    <!-- 섹션: 차량 건강 점수 -->
+    <div class="card section" id="section-health">
+      <div class="back-link" onclick="backHome()">
+        <span>←</span> 메뉴로 돌아가기
+      </div>
+      <h2>내 차 건강점수 셀프 진단</h2>
+      <p class="lead">
+        간단한 6문항만 선택하시면, 내 차 상태를 가볍게 점검해 보실 수 있습니다.<br>
+        (※ 실제 검사 데이터는 사용하지 않는 자가진단 서비스입니다.)
+      </p>
+
+      <div class="question-block">
+        <label for="q1">Q1. 차량 연식은?</label>
+        <select id="q1">
+          <option value="0">선택하세요</option>
+          <option value="5">1~3년</option>
+          <option value="4">4~7년</option>
+          <option value="3">8~12년</option>
+          <option value="2">13년 이상</option>
+        </select>
+      </div>
+
+      <div class="question-block">
+        <label for="q2">Q2. 주행거리는?</label>
+        <select id="q2">
+          <option value="0">선택하세요</option>
+          <option value="5">3만 km 이하</option>
+          <option value="4">3만~10만 km</option>
+          <option value="3">10만~15만 km</option>
+          <option value="2">15만 km 이상</option>
+        </select>
+      </div>
+
+      <div class="question-block">
+        <label for="q3">Q3. 최근 1년 내 엔진오일 교환을 하셨나요?</label>
+        <select id="q3">
+          <option value="0">선택하세요</option>
+          <option value="5">예</option>
+          <option value="2">아니요 / 기억 안 남</option>
+        </select>
+      </div>
+
+      <div class="question-block">
+        <label for="q4">Q4. 최근 2년 내 타이어 교환을 하셨나요?</label>
+        <select id="q4">
+          <option value="0">선택하세요</option>
+          <option value="5">예</option>
+          <option value="2">아니요 / 기억 안 남</option>
+        </select>
+      </div>
+
+      <div class="question-block">
+        <label for="q5">Q5. 브레이크 패드는 언제 교환하셨나요?</label>
+        <select id="q5">
+          <option value="0">선택하세요</option>
+          <option value="5">2년 이내</option>
+          <option value="3">2년 이상 지남 / 기억 안 남</option>
+        </select>
+      </div>
+
+      <div class="question-block">
+        <label for="q6">Q6. 평소 주행 환경은?</label>
+        <select id="q6">
+          <option value="0">선택하세요</option>
+          <option value="4">고속도로 위주</option>
+          <option value="3">도심·고속 반반</option>
+          <option value="2">도심 위주 정체 구간이 많음</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="calculateHealth()">건강점수 확인하기</button>
+
+      <div class="result-box" id="health-result">
+        설문을 선택하신 뒤 [건강점수 확인하기] 버튼을 눌러 주세요.
+      </div>
+    </div>
+
+    <!-- 섹션: 퀴즈 -->
+    <div class="card section" id="section-quiz">
+      <div class="back-link" onclick="backHome()">
+        <span>←</span> 메뉴로 돌아가기
+      </div>
+      <h2>자동차 상식 OX 퀴즈</h2>
+      <p class="lead">
+        대기 시간 동안 가볍게 풀어보는 자동차 상식 퀴즈입니다. 정답은 바로 아래에 있어요 🙂
+      </p>
+
+      <div class="quiz-item">
+        <strong>Q1. 정기검사 전날, 꼭 세차를 하고 오면 검사에 유리하다. (O / X)</strong>
+        <div class="quiz-answer">
+          👉 <b>정답: X</b><br>
+          외관이 깨끗한 것보다 더 중요한 건 기본적인 안전 상태입니다.<br>
+          다만 하부 상태가 잘 보이도록 심한 오염만 조금 정리해 오시면 검사에 도움이 될 수 있습니다.
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <strong>Q2. 엔진오일 색이 까매지면 무조건 바로 교환해야 한다. (O / X)</strong>
+        <div class="quiz-answer">
+          👉 <b>정답: X</b><br>
+          색이 어두워지는 것은 자연스러운 현상입니다. 교환 시기는 주행거리, 교환 주기, 점도 변화 등을 함께 보는 것이 좋습니다.
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <strong>Q3. 사이드슬립이 기준에서 조금 벗어나도 운행에 불편이 없다면, 타이어 교체 시기에 휠 얼라인먼트를 함께 하면 된다. (O / X)</strong>
+        <div class="quiz-answer">
+          👉 <b>정답: O(조건부)</b><br>
+          운행 중 쏠림이나 진동이 없고, 편마모가 심하지 않다면 타이어 교체 시기에 휠 얼라인먼트를 함께 진행하면 비용을 절약할 수 있습니다.<br>
+          다만, 이미 편마모·쏠림이 느껴지면 시기를 앞당겨 점검하시는 것이 좋습니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 섹션: 만족도 -->
+    <div class="card section" id="section-feedback">
+      <div class="back-link" onclick="backHome()">
+        <span>←</span> 메뉴로 돌아가기
+      </div>
+      <h2>한 줄 만족도 의견 남기기</h2>
+      <p class="lead">
+        짧은 한 줄 의견도 더 나은 검사 서비스를 만드는 데 큰 도움이 됩니다.<br>
+        오늘 느끼신 점을 자유롭게 적어 주세요.
+      </p>
+
+      <textarea id="feedback-text" placeholder="예) 직원분이 친절해서 좋았습니다.&#10;예) 대기시간 안내가 더 있으면 좋겠습니다."></textarea>
+      <button class="btn" onclick="submitFeedback()">의견 보내기</button>
+
+      <div class="info-box">
+        개인정보(이름, 전화번호, 차량번호 등)는 적지 말아 주세요.
+      </div>
+    </div>
+
+    <footer>
+      © 주례 자동차검사소 · 대기 중 안내 서비스
+    </footer>
+  </div>
+</div>
+
+<script>
+  // 인트로 타이핑 텍스트
+  const introLines = [
+    "안녕하세요, 주례자동차검사소입니다.",
+    "대기하시는 동안 지루하지 않도록",
+    "검사 과정과 차량 관리 팁을 간단하게 안내해 드립니다."
+  ];
+
+  const introEl = document.getElementById("intro-text");
+  const mainContent = document.getElementById("main-content");
+  let lineIndex = 0;
+  let charIndex = 0;
+
+  function typeIntro() {
+    if (lineIndex >= introLines.length) {
+      // 타이핑 완료 → 메뉴 보이기
+      showMainContent();
+      return;
+    }
+
+    const currentLine = introLines[lineIndex];
+
+    if (charIndex <= currentLine.length) {
+      const textSoFar = introLines
+        .slice(0, lineIndex)
+        .join("\n") + (lineIndex > 0 ? "\n" : "") +
+        currentLine.substring(0, charIndex);
+
+      introEl.innerHTML = textSoFar + "<span class='typing-cursor'></span>";
+      charIndex++;
+      setTimeout(typeIntro, 55); // 타자 속도
+    } else {
+      // 라인 하나 완료 후 다음 라인으로
+      lineIndex++;
+      charIndex = 0;
+      setTimeout(typeIntro, 250);
+    }
+  }
+
+  function showMainContent() {
+    // 커서 제거하고 전체 문장 고정
+    introEl.innerHTML = introLines.join("\n");
+    // 메뉴 영역 표시
+    mainContent.classList.add("visible");
+  }
+
+  // 타이핑 시작
+  setTimeout(typeIntro, 400);
+
+  // 섹션 전환 함수들
+  function showSection(sectionId) {
+    document.getElementById('home-card').style.display = 'none';
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(sec => sec.classList.remove('active'));
+
+    const target = document.getElementById('section-' + sectionId);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function backHome() {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(sec => sec.classList.remove('active'));
+    document.getElementById('home-card').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function calculateHealth() {
+    const qIds = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+    let total = 0;
+    let count = 0;
+    for (const id of qIds) {
+      const v = parseInt(document.getElementById(id).value, 10);
+      if (!v) {
+        document.getElementById('health-result').innerText =
+          '모든 문항을 선택해 주세요.';
+        return;
+      }
+      total += v;
+      count++;
+    }
+    const avg = total / count; // 2~5 사이
+    const score = Math.round((avg / 5) * 50) / 10; // 0.0~10.0
+
+    let levelMsg = '';
+    if (score >= 8) {
+      levelMsg = '전반적으로 잘 관리되고 있는 편입니다. 지금처럼 점검 주기를 유지해 주세요.';
+    } else if (score >= 6) {
+      levelMsg = '보통~양호 상태입니다. 타이어·브레이크 등 소모품 위주로 한 번 점검 받아 보시면 좋겠습니다.';
+    } else {
+      levelMsg = '주행거리와 사용 연식을 고려하면, 기본 점검(엔진오일, 타이어, 브레이크)을 한 번 정비소에서 받아 보시는 것을 권장드립니다.';
+    }
+
+    const resultEl = document.getElementById('health-result');
+    resultEl.innerHTML =
+      '<b>내 차 건강점수: ' + score.toFixed(1) + ' / 10</b><br>' +
+      levelMsg +
+      '<br><br>👉 오늘 검사 결과를 들으실 때, ' +
+      '“앞으로 어떤 정비를 준비하면 좋을지”도 함께 물어보시면 더 도움이 됩니다.';
+  }
+
+  function submitFeedback() {
+    const text = document.getElementById('feedback-text').value.trim();
+    if (!text) {
+      alert('의견을 간단히 한 줄이라도 입력해 주세요.');
+      return;
+    }
+    // 실제 서비스에서는 여기서 서버로 전송
+    alert('의견 감사합니다. 더 나은 서비스를 위해 노력하겠습니다.');
+    document.getElementById('feedback-text').value = '';
+  }
+</script>
+</body>
+</html>
