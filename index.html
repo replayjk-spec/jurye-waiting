@@ -70,7 +70,8 @@
     .fb-tag { padding: 8px 12px; border-radius: 20px; border: 1px solid #eee; background: white; font-size: 0.9rem; color: #555; cursor: pointer; transition: 0.1s; }
     .fb-tag.selected { background: #e7f5ff; border-color: var(--ts-blue); color: var(--ts-blue); font-weight: bold; }
     .fb-textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ddd; resize: vertical; font-family: inherit; font-size: 0.95rem; margin-bottom: 15px; }
-    .fb-submit { width: 100%; padding: 15px; border: none; border-radius: 12px; background: var(--ts-blue); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; }
+    .fb-submit { width: 100%; padding: 15px; border: none; border-radius: 12px; background: var(--ts-blue); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s;}
+    .fb-submit:disabled { background: #ccc; cursor: not-allowed; }
 
     /* 안전 캠페인 버튼 */
     .safety-campaign { margin-top: 15px; display: flex; gap: 10px; }
@@ -78,7 +79,7 @@
     .campaign-btn.blackbox { background: #333; color: white; }
     .campaign-btn.alarm { background: #e9ecef; color: #333; }
 
-    /* 모달 (블랙박스 팁 등) */
+    /* 모달 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; }
     .modal-content { background: white; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; position: relative; animation: fadeIn 0.3s; }
     .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #aaa; cursor: pointer; }
@@ -238,17 +239,22 @@
     <div class="section-body">
         <div style="margin-bottom:20px;">
             <h4 style="font-weight:800; margin-bottom:5px; color:#d63031;" data-i18n="tip_oil_title">🛢️ 엔진오일 부족 (검사불가)</h4>
-            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_oil_desc">오일이 L선 이하로 없으면 검사 자체가 불가능합니다. 부족하면 미리 보충해오세요.</p>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_oil_desc">오일이 L선 이하로 없으면 <strong>검사 자체가 불가능</strong>합니다. 부족하면 미리 보충해오세요.</p>
         </div>
         <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
         <div style="margin-bottom:20px;">
             <h4 style="font-weight:800; margin-bottom:5px; color:#e17055;" data-i18n="tip_light_title">💡 등화장치 (전구)</h4>
-            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_light_desc">전구가 나간 경우, 출구 쪽에 있는 [셀프정비코너]로 가시면 도우미 서비스(외주)를 이용해 쉽게 교체할 수 있습니다.</p>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_light_desc">전구가 나간 경우, 출구 쪽에 있는 <strong>[셀프정비코너]</strong>로 가시면 <strong>도우미 서비스(외주)</strong>를 이용해 쉽게 교체할 수 있습니다.</p>
         </div>
     </div>
 </div>
 
 <script>
+    // ------------------------------------------
+    //  Google Apps Script URL (데이터 전송용)
+    // ------------------------------------------
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNn8xzeeQpprjtma4PcOV9yaXP4WB6g3uJZ9L7PC8nQOuvGvnLFter1b7yl5u_SDlf/exec";
+
     // i18n Data
     const i18n = {
         ko: { 
@@ -333,7 +339,6 @@
             tag_kind: "💕 Very Kind", tag_fast: "🚀 Fast", tag_detail: "📝 Detailed",
             tag_wait: "🐢 Long Wait", tag_info: "📢 Poor Info", tag_fac: "🚽 Bad Facility"
         },
-        // 베트남어, 중국어 데이터는 지면 관계상 생략 (동일한 구조로 추가 가능)
         vi: { title: "Phòng chờ Thông minh", subtitle: "Biến thời gian chờ thành hữu ích!", btn_blackbox: "Mẹo Camera", btn_alarm: "Thông báo", menu_retest: "Kiểm tra lại Nhanh", menu_retest_desc: "Không cần xếp hàng!", menu_fuel: "Mẹo nhiên liệu", menu_fuel_desc: "Dầu / Điện / Xăng", menu_check: "Tự kiểm tra", menu_check_desc: "Chuẩn bị", menu_tips: "Tránh lỗi", menu_tips_desc: "Lý do trượt", menu_feedback: "Ý kiến", menu_feedback_desc: "Khen / Chê", sec_retest_title: "Lối đi nhanh", fast_track_title: "Đi thẳng ra lối ra!", fast_track_desc: "Xe kiểm tra lại lỗi nhỏ không cần xếp hàng.", fast_item_1: "Đèn biển số/phanh", fast_item_2: "Lốp xe", slow_track_title: "Phải xếp hàng!", slow_track_desc: "Kiểm tra đèn pha cần thiết bị, vui lòng xếp hàng.", sec_fuel_title: "Mẹo nhiên liệu", fuel_select_msg: "Chọn loại nhiên liệu", fuel_diesel_title: "🚙 Xe Dầu", fuel_diesel_desc: "Không rồ ga khi chờ. Vệ sinh họng hút mỗi 80k km.", fuel_gasoline_title: "🚗 Xe Xăng", fuel_gasoline_desc: "Kiểm tra bugi và dầu nhớt.", fuel_ev_title: "⚡ Xe Điện", fuel_ev_desc: "Không kiểm tra khí thải. Nhanh hơn 5 phút.", fuel_hybrid_title: "🌱 Xe Hybrid", fuel_hybrid_desc: "Động cơ có thể tự khởi động.", sec_check_title: "Tự kiểm tra", car_select_msg: "Chọn loại xe", car_ray_title: "Dọn cốp!", car_ray_desc: "Số khung nằm dưới thảm cốp.", car_qm3_title: "Dọn 2 chỗ!", car_qm3_desc: "Sàn cốp và hộc điều khiển.", car_truck_title: "Kiểm tra thùng!", car_truck_desc: "Nên để xe không tải.", car_normal_title: "Cơ bản", car_normal_desc: "Mang theo vật quý giá.", sec_tips_title: "Mẹo tránh trượt", tip_oil_title: "🛢️ Thiếu dầu", tip_oil_desc: "Không thể kiểm tra nếu thiếu dầu.", tip_light_title: "💡 Đèn xe", tip_light_desc: "Dùng dịch vụ hỗ trợ tại lối ra để thay bóng.", bb_title: "Mẹo Camera", bb_desc: "Định dạng thẻ nhớ định kỳ.", fb_good: "Khen ngợi", fb_bad: "Khiếu nại", fb_submit: "Gửi", tag_kind: "Thân thiện", tag_fast: "Nhanh", tag_detail: "Chi tiết", tag_wait: "Chờ lâu", tag_info: "Thiếu tin", tag_fac: "Cơ sở kém" },
         cn: { title: "智能候车室", subtitle: "有益的等待时间！", btn_blackbox: "行车记录仪", btn_alarm: "通知申请", menu_retest: "复检通道", menu_retest_desc: "无需排队！", menu_fuel: "燃料提示", menu_fuel_desc: "柴油/电动/汽油", menu_check: "事前检查", menu_check_desc: "准备", menu_tips: "避免不合格", menu_tips_desc: "常见原因", menu_feedback: "客户之声", menu_feedback_desc: "称赞/投诉", sec_retest_title: "复检快速通道", fast_track_title: "直接去出口！", fast_track_desc: "简单复检无需排队。", fast_item_1: "牌照灯/刹车灯", fast_item_2: "轮胎", slow_track_title: "必须排队！", slow_track_desc: "大灯复检需要设备，请排队。", sec_fuel_title: "燃料提示", fuel_select_msg: "选择燃料", fuel_diesel_title: "🚙 柴油车", fuel_diesel_desc: "请勿空转轰油门。建议每8万公里清洗进气。", fuel_gasoline_title: "🚗 汽油车", fuel_gasoline_desc: "检查火花塞和机油。", fuel_ev_title: "⚡ 电动车", fuel_ev_desc: "免尾气检查。", fuel_hybrid_title: "🌱 混动车", fuel_hybrid_desc: "发动机可能会启动。", sec_check_title: "事前检查", car_select_msg: "选择车型", car_ray_title: "清理后备箱！", car_ray_desc: "车架号在后备箱下。", car_qm3_title: "清理两处！", car_qm3_desc: "后备箱底和中控台下。", car_truck_title: "确认货箱！", car_truck_desc: "建议空车状态。", car_normal_title: "基本", car_normal_desc: "保管好贵重物品。", sec_tips_title: "避免不合格", tip_oil_title: "🛢️ 机油不足", tip_oil_desc: "机油不足无法检查。", tip_light_title: "💡 车灯", tip_light_desc: "可在出口处使用辅助服务更换。", bb_title: "记录仪提示", bb_desc: "请定期格式化存储卡。", fb_good: "称赞", fb_bad: "不满", fb_submit: "发送", tag_kind: "亲切", tag_fast: "快速", tag_detail: "详细", tag_wait: "等待久", tag_info: "信息少", tag_fac: "设施差" }
     };
@@ -341,18 +346,21 @@
 
     function setLang(lang) {
         currentLang = lang;
-        // Refactored active toggle
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
         
-        // Update static text
+        // 정적 텍스트 업데이트
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if(i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
         });
 
-        // Update dynamic content if open
+        // 동적 콘텐츠 업데이트 (열려있는 경우)
+        updateDynamicContent();
+    }
+
+    function updateDynamicContent() {
         const activeFuelBtn = document.querySelector('#fuel .select-btn.active');
         if (activeFuelBtn) {
             const type = activeFuelBtn.getAttribute('onclick').match(/'([^']+)'/)[1];
@@ -369,7 +377,6 @@
         document.getElementById(id).classList.add('active'); 
         window.scrollTo(0,0);
         
-        // Speak section title
         const titleKey = id === 'fuel' ? 'sec_fuel_title' : 
                          id === 'check' ? 'sec_check_title' : 
                          id === 'retest' ? 'sec_retest_title' : 
@@ -396,7 +403,7 @@
         window.speechSynthesis.speak(ut);
     }
 
-    // Modal Logic
+    // Modal
     function openModal(id) { document.getElementById('modal-'+id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById('modal-'+id).style.display = 'none'; }
 
@@ -408,10 +415,8 @@
         const box = document.getElementById('fuel-guide-box');
         box.style.display = 'block';
         
-        // Dynamic Data Fetch
         const titleKey = `fuel_${type}_title`;
         const descKey = `fuel_${type}_desc`;
-        
         document.getElementById('fuel-title').innerHTML = i18n[currentLang][titleKey];
         document.getElementById('fuel-desc').innerHTML = i18n[currentLang][descKey];
     }
@@ -426,12 +431,11 @@
         
         const titleKey = `car_${type}_title`;
         const descKey = `car_${type}_desc`;
-        
         document.getElementById('car-title').innerHTML = i18n[currentLang][titleKey];
         document.getElementById('car-desc').innerHTML = i18n[currentLang][descKey];
     }
 
-    // Feedback Logic (Refactored)
+    // Feedback (Refactored)
     function setFeedbackType(type) {
         const tabGood = document.querySelector('.fb-tab.good');
         const tabBad = document.querySelector('.fb-tab.bad');
@@ -450,9 +454,47 @@
         }
     }
     function toggleTag(el) { el.classList.toggle('selected'); }
+    
     function submitFeedback() {
-        alert("소중한 의견 감사합니다!");
-        closeSection('feedback');
+        const type = document.querySelector('.fb-tab.active').classList.contains('good') ? '칭찬' : '불편';
+        const tags = Array.from(document.querySelectorAll('.fb-tag.selected')).map(t => t.innerText).join(', ');
+        const message = document.querySelector('.fb-textarea').value;
+
+        if(!tags && !message) {
+            alert("태그를 선택하거나 내용을 입력해주세요.");
+            return;
+        }
+
+        const payload = {
+            type: type,
+            tags: tags,
+            message: message
+        };
+
+        const btn = document.querySelector('.fb-submit');
+        const originalText = btn.innerText;
+        btn.innerText = "전송 중...";
+        btn.disabled = true;
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            alert("소중한 의견이 전달되었습니다!");
+            document.querySelector('.fb-textarea').value = '';
+            document.querySelectorAll('.fb-tag').forEach(t => t.classList.remove('selected'));
+            closeSection('feedback');
+        })
+        .catch(error => {
+            alert("전송 실패: " + error);
+        })
+        .finally(() => {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
     }
 
     setLang('ko');
@@ -465,18 +507,18 @@ function updateWaitTime() {
 
     let status = "보통";
     let color = "#28a745"; // 초록
-    let timeMsg = "약 20분 소요";
+    let timeMsg = "약 15분 소요";
     let congestionWidth = "50%"; // 게이지 바 길이
 
     // 1. 점심시간 (11:50 ~ 13:00)
-    if (hour === 12 || (hour === 11 && min >= 50)) {
+    if (hour === 12 || (hour === 11 && min >= 45)) {
         status = "점심시간";
         color = "#fd7e14"; // 주황
         timeMsg = "오후 검사 대기 중";
         congestionWidth = "80%";
     } 
-    // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 10~10시, 오후 2~3시)
-    else if ((day === 1 && hour < 12) || (hour >= 10 && hour <= 11) || (hour >= 14 && hour <= 15)) {
+    // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 9~10시, 오후 2~3시)
+    else if ((day === 1 && hour < 12) || (hour >= 9 && hour <= 10) || (hour >= 14 && hour <= 15)) {
         status = "혼잡";
         color = "#dc3545"; // 빨강
         timeMsg = "약 30분 소요";
@@ -493,7 +535,7 @@ function updateWaitTime() {
     else {
         status = "원활";
         color = "#28a745"; // 초록
-        timeMsg = "약 15분 이내 소요";
+        timeMsg = "약 10분 이내 소요";
         congestionWidth = "30%";
     }
 
