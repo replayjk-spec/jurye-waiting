@@ -52,31 +52,23 @@
     .section-title { font-weight: 800; font-size: 1.1rem; color: #333; }
     .section-body { padding: 20px; }
 
-    /* 패스트트랙 및 기타 */
-    .fast-track-box { border: 2px solid var(--danger-red); background: #fffafa; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-    .fast-track-title { color: var(--danger-red); font-weight: 800; font-size: 1.2rem; margin-bottom: 10px; }
-    .fast-list li { margin-bottom: 8px; font-weight: 600; color: #444; list-style: none; display: flex; align-items: center;}
-    .fast-list li i { color: var(--danger-red); margin-right: 8px; width: 20px; text-align: center;}
-    
-    /* 핀셋 가이드 버튼 */
+    /* 스타일: 가이드 박스 */
+    .guide-box { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; animation: fadeIn 0.4s; border: 1px solid #eee; background: #f9f9f9; }
     .select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
     .select-btn { padding: 15px; border: 1px solid #ddd; background: white; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; color: #555; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .select-btn.active { background: var(--ts-blue); color: white; border-color: var(--ts-blue); box-shadow: 0 4px 10px rgba(0,94,184,0.2); transform: translateY(-2px); }
     .select-btn.active i { color: white; }
     .select-btn i { font-size: 1.5rem; color: #ccc; margin-bottom: 4px; }
-    .guide-box { margin-top: 20px; padding: 20px; border-radius: 12px; display: none; animation: fadeIn 0.4s; border: 1px solid #eee; background: #f9f9f9; }
 
-    /* 고객의 소리 (Feedback) 스타일 */
+    /* 고객의 소리 */
     .feedback-tabs { display: flex; margin-bottom: 20px; background: #f1f3f5; padding: 4px; border-radius: 12px; }
     .fb-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 10px; font-weight: 600; color: #888; transition: 0.2s; }
     .fb-tab.active { background: white; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .fb-tab.active.good { color: var(--ts-blue); }
     .fb-tab.active.bad { color: var(--danger-red); }
-    
     .fb-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
     .fb-tag { padding: 8px 12px; border-radius: 20px; border: 1px solid #eee; background: white; font-size: 0.9rem; color: #555; cursor: pointer; transition: 0.1s; }
     .fb-tag.selected { background: #e7f5ff; border-color: var(--ts-blue); color: var(--ts-blue); font-weight: bold; }
-    
     .fb-textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ddd; resize: vertical; font-family: inherit; font-size: 0.95rem; margin-bottom: 15px; }
     .fb-submit { width: 100%; padding: 15px; border: none; border-radius: 12px; background: var(--ts-blue); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; }
 
@@ -85,6 +77,21 @@
     .campaign-btn { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
     .campaign-btn.blackbox { background: #333; color: white; }
     .campaign-btn.alarm { background: #e9ecef; color: #333; }
+
+    /* 모달 (블랙박스 팁 등) */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; }
+    .modal-content { background: white; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; position: relative; animation: fadeIn 0.3s; }
+    .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: #aaa; cursor: pointer; }
+
+    /* 패스트트랙 & 프로세스 */
+    .fast-track-box { border: 2px solid var(--danger-red); background: #fffafa; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .fast-track-title { color: var(--danger-red); font-weight: 800; font-size: 1.2rem; margin-bottom: 10px; }
+    .fast-list li { margin-bottom: 8px; font-weight: 600; color: #444; list-style: none; display: flex; align-items: center;}
+    .fast-list li i { color: var(--danger-red); margin-right: 8px; width: 20px; text-align: center;}
+    .process-container { position: relative; padding-left: 20px; margin-top: 10px; }
+    .process-container::before { content: ''; position: absolute; left: 14px; top: 10px; bottom: 30px; width: 2px; background: #e0e0e0; }
+    .process-step { position: relative; padding-left: 25px; margin-bottom: 25px; }
+    .step-icon { position: absolute; left: -20px; top: 0; width: 30px; height: 30px; background: white; border: 2px solid var(--ts-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--ts-blue); font-size: 0.9rem; z-index: 2; }
 
     @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -97,10 +104,10 @@
     <div class="header-top">
       <span class="badge-location"><i class="fas fa-map-marker-alt"></i> 주례자동차검사소</span>
       <div class="lang-btn-group">
-          <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
-          <button class="lang-btn" onclick="setLang('en')">ENG</button>
-          <button class="lang-btn" onclick="setLang('vi')">Việt</button>
-          <button class="lang-btn" onclick="setLang('cn')">中文</button>
+          <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">한국어</button>
+          <button class="lang-btn" data-lang="en" onclick="setLang('en')">ENG</button>
+          <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">Việt</button>
+          <button class="lang-btn" data-lang="cn" onclick="setLang('cn')">中文</button>
       </div>
     </div>
     <h1 data-i18n="title">스마트 대기실</h1>
@@ -111,11 +118,11 @@
   <div class="content">
     
     <div class="safety-campaign">
-        <button class="campaign-btn blackbox" onclick="alert('대기 중 블랙박스 메모리를 포맷해주세요!\n사고 시 녹화 불량을 예방합니다.')">
-            <i class="fas fa-video"></i> 블랙박스 점검
+        <button class="campaign-btn blackbox" onclick="openModal('blackbox')">
+            <i class="fas fa-video"></i> <span data-i18n="btn_blackbox">블랙박스 관리법</span>
         </button>
-        <button class="campaign-btn alarm" onclick="window.open('https://www.kotsa.or.kr', '_blank')">
-            <i class="fas fa-bell"></i> 검사알림 신청
+        <button class="campaign-btn alarm" onclick="window.open('https://main.kotsa.or.kr/portal/contents.do?menuCode=04050200', '_blank')">
+            <i class="fas fa-bell"></i> <span data-i18n="btn_alarm">검사알림 신청</span>
         </button>
     </div>
     <div style="height: 15px;"></div>
@@ -143,139 +150,238 @@
   </div>
 </div>
 
+<div id="modal-blackbox" class="modal-overlay" onclick="closeModal('blackbox')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="modal-close" onclick="closeModal('blackbox')">&times;</span>
+        <h3 style="margin-bottom:10px; color:#333;"><i class="fas fa-memory"></i> <span data-i18n="bb_title">블랙박스 관리 꿀팁</span></h3>
+        <p style="font-size:0.95rem; line-height:1.6; color:#555;" data-i18n="bb_desc">
+            사고 순간, 영상이 녹화되지 않아 낭패를 보는 경우가 많습니다.<br><br>
+            <strong>1. 주기적 포맷:</strong> 메모리 카드는 소모품입니다. 2주에 한 번은 포맷해 주세요.<br>
+            <strong>2. 생각난 김에 지금?:</strong> 대기하시는 동안 블랙박스 설정 메뉴에서 '포맷'을 진행해 보세요.
+        </p>
+        <button style="width:100%; margin-top:15px; padding:10px; background:#333; color:white; border:none; border-radius:8px;" onclick="closeModal('blackbox')">확인</button>
+    </div>
+</div>
+
 <div id="feedback" class="section">
-    <div class="section-header"><button class="back-btn" onclick="closeSection('feedback')"><i class="fas fa-arrow-left"></i></button><span class="section-title">고객의 소리함</span></div>
+    <div class="section-header"><button class="back-btn" onclick="closeSection('feedback')"><i class="fas fa-arrow-left"></i></button><span class="section-title" data-i18n="menu_feedback">고객의 소리함</span></div>
     <div class="section-body">
         <div class="feedback-tabs">
-            <div class="fb-tab active good" onclick="setFeedbackType('good')">😊 칭찬하기</div>
-            <div class="fb-tab" onclick="setFeedbackType('bad')">😟 불편해요</div>
+            <div class="fb-tab active good" onclick="setFeedbackType('good')">😊 <span data-i18n="fb_good">칭찬하기</span></div>
+            <div class="fb-tab bad" onclick="setFeedbackType('bad')">😟 <span data-i18n="fb_bad">불편해요</span></div>
         </div>
 
         <div id="fb-tags-good" class="fb-tags">
-            <span class="fb-tag" onclick="toggleTag(this)">💕 너무 친절해요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">🚀 처리가 빨라요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">📝 설명이 꼼꼼해요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">🏢 시설이 쾌적해요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_kind">💕 너무 친절해요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_fast">🚀 처리가 빨라요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_detail">📝 설명이 꼼꼼해요</span>
         </div>
         <div id="fb-tags-bad" class="fb-tags" style="display:none;">
-            <span class="fb-tag" onclick="toggleTag(this)">🐢 대기가 길어요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">📢 안내가 부족해요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">❄️ 대기실이 추워요</span>
-            <span class="fb-tag" onclick="toggleTag(this)">🚽 화장실이 불편해요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_wait">🐢 대기가 길어요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_info">📢 안내가 부족해요</span>
+            <span class="fb-tag" onclick="toggleTag(this)" data-i18n="tag_fac">🚽 시설이 불편해요</span>
         </div>
 
-        <textarea class="fb-textarea" rows="5" placeholder="기타 의견이 있으시면 자유롭게 적어주세요. (선택사항)"></textarea>
-        <button class="fb-submit" onclick="submitFeedback()">의견 보내기</button>
+        <textarea class="fb-textarea" rows="5" placeholder="기타 의견이 있으시면 자유롭게 적어주세요."></textarea>
+        <button class="fb-submit" onclick="submitFeedback()" data-i18n="fb_submit">의견 보내기</button>
     </div>
 </div>
 
 <div id="retest" class="section">
-    <div class="section-header"><button class="back-btn" onclick="closeSection('retest')"><i class="fas fa-arrow-left"></i></button><span class="section-title">재검사 패스트트랙</span></div>
+    <div class="section-header"><button class="back-btn" onclick="closeSection('retest')"><i class="fas fa-arrow-left"></i></button><span class="section-title" data-i18n="sec_retest_title">재검사 패스트트랙</span></div>
     <div class="section-body">
       <div class="fast-track-box">
-        <div class="fast-track-title"><i class="fas fa-bolt"></i> 바로 출구로 오세요!</div>
-        <p style="margin-bottom:15px; color:#333;">아래 항목 재검사는 <strong>대기줄을 서지 말고 바로 출구 쪽으로</strong> 오시면 됩니다.</p>
-        <ul class="fast-list"><li><i class="fas fa-lightbulb"></i> 번호판등 / 제동등 / 방향지시등</li><li><i class="fas fa-record-vinyl"></i> 타이어 교체 확인</li></ul>
+        <div class="fast-track-title"><i class="fas fa-bolt"></i> <span data-i18n="fast_track_title">바로 출구로 오세요!</span></div>
+        <p style="margin-bottom:15px; color:#333;" data-i18n="fast_track_desc">아래 항목 재검사는 대기줄을 서지 말고 바로 출구 쪽으로 오시면 됩니다.</p>
+        <ul class="fast-list">
+            <li><i class="fas fa-lightbulb"></i> <span data-i18n="fast_item_1">번호판등 / 제동등 / 방향지시등</span></li>
+            <li><i class="fas fa-record-vinyl"></i> <span data-i18n="fast_item_2">타이어 교체 확인</span></li>
+        </ul>
       </div>
-      <div class="slow-track-box">
-        <div style="font-weight:800; color:var(--ts-blue); font-size:1.1rem; margin-bottom:10px;"><i class="fas fa-stopwatch"></i> 입구 대기 필수!</div>
-        <p style="margin-bottom:10px;"><strong>전조등(헤드라이트) 재검사</strong>는 장비 측정이 필요하므로, 반드시 <strong>입구에서 줄을 서서</strong> 진입해야 합니다.</p>
+      <div class="slow-track-box" style="background:#f0f5ff; border:2px solid var(--ts-blue); border-radius:12px; padding:20px;">
+        <div style="font-weight:800; color:var(--ts-blue); font-size:1.1rem; margin-bottom:10px;"><i class="fas fa-stopwatch"></i> <span data-i18n="slow_track_title">입구 대기 필수!</span></div>
+        <p style="margin-bottom:10px;" data-i18n="slow_track_desc">전조등(헤드라이트) 재검사는 장비 측정이 필요하므로, 반드시 입구에서 줄을 서서 진입해야 합니다.</p>
       </div>
     </div>
 </div>
 
 <div id="fuel" class="section">
-    <div class="section-header"><button class="back-btn" onclick="closeSection('fuel')"><i class="fas fa-arrow-left"></i></button><span class="section-title">연료별 맞춤 꿀팁</span></div>
+    <div class="section-header"><button class="back-btn" onclick="closeSection('fuel')"><i class="fas fa-arrow-left"></i></button><span class="section-title" data-i18n="sec_fuel_title">연료별 맞춤 꿀팁</span></div>
     <div class="section-body">
-        <p style="text-align:center; margin-bottom:15px; font-weight:600;">내 차의 연료를 선택하세요</p>
+        <p style="text-align:center; margin-bottom:15px; font-weight:600;" data-i18n="fuel_select_msg">내 차의 연료를 선택하세요</p>
         <div class="select-grid">
-            <div class="select-btn" onclick="showFuelGuide('diesel')"><i class="fas fa-truck-moving"></i><span>경유 (Diesel)</span></div>
-            <div class="select-btn" onclick="showFuelGuide('gasoline')"><i class="fas fa-gas-pump"></i><span>휘발유/LPG</span></div>
-            <div class="select-btn" onclick="showFuelGuide('ev')"><i class="fas fa-bolt"></i><span>전기/수소 (EV)</span></div>
-            <div class="select-btn" onclick="showFuelGuide('hybrid')"><i class="fas fa-leaf"></i><span>하이브리드</span></div>
+            <div class="select-btn" onclick="showFuelGuide('diesel')"><i class="fas fa-truck-moving"></i><span>Diesel</span></div>
+            <div class="select-btn" onclick="showFuelGuide('gasoline')"><i class="fas fa-gas-pump"></i><span>Gasoline/LPG</span></div>
+            <div class="select-btn" onclick="showFuelGuide('ev')"><i class="fas fa-bolt"></i><span>EV</span></div>
+            <div class="select-btn" onclick="showFuelGuide('hybrid')"><i class="fas fa-leaf"></i><span>Hybrid</span></div>
         </div>
         <div id="fuel-guide-box" class="guide-box"><h4 id="fuel-title"></h4><div id="fuel-desc"></div></div>
     </div>
 </div>
 
 <div id="check" class="section">
-    <div class="section-header"><button class="back-btn" onclick="closeSection('check')"><i class="fas fa-arrow-left"></i></button><span class="section-title">입장 전 1분 체크</span></div>
+    <div class="section-header"><button class="back-btn" onclick="closeSection('check')"><i class="fas fa-arrow-left"></i></button><span class="section-title" data-i18n="sec_check_title">입장 전 1분 체크</span></div>
     <div class="section-body">
-        <p style="text-align:center; margin-bottom:15px; font-weight:600;">내 차종을 선택하면 꿀팁을 드려요!</p>
+        <p style="text-align:center; margin-bottom:15px; font-weight:600;" data-i18n="car_select_msg">내 차종을 선택하면 꿀팁을 드려요!</p>
         <div class="select-grid">
-            <div class="select-btn" onclick="showCarGuide('ray')"><i class="fas fa-car-side"></i><span>레이 / 모닝</span></div>
+            <div class="select-btn" onclick="showCarGuide('ray')"><i class="fas fa-car-side"></i><span>Ray / Morning</span></div>
             <div class="select-btn" onclick="showCarGuide('qm3')"><i class="fas fa-car"></i><span>QM3 / SM3</span></div>
-            <div class="select-btn" onclick="showCarGuide('truck')"><i class="fas fa-truck"></i><span>화물차 (트럭)</span></div>
-            <div class="select-btn" onclick="showCarGuide('normal')"><i class="fas fa-car"></i><span>그 외 승용</span></div>
+            <div class="select-btn" onclick="showCarGuide('truck')"><i class="fas fa-truck"></i><span>Truck</span></div>
+            <div class="select-btn" onclick="showCarGuide('normal')"><i class="fas fa-car"></i><span>Normal</span></div>
         </div>
         <div id="car-guide-box" class="guide-box"><h4 id="car-title"></h4><div id="car-desc"></div></div>
     </div>
 </div>
 
 <div id="reject_tips" class="section">
-    <div class="section-header"><button class="back-btn" onclick="closeSection('reject_tips')"><i class="fas fa-arrow-left"></i></button><span class="section-title">부적합 방지 꿀팁</span></div>
+    <div class="section-header"><button class="back-btn" onclick="closeSection('reject_tips')"><i class="fas fa-arrow-left"></i></button><span class="section-title" data-i18n="sec_tips_title">부적합 방지 꿀팁</span></div>
     <div class="section-body">
-        <div style="margin-bottom:20px;"><h4 style="font-weight:800; margin-bottom:5px; color:#d63031;">🛢️ 엔진오일 부족 (검사불가)</h4><p style="font-size:0.9rem; color:#555;">오일이 L선 이하로 없으면 <strong>검사 자체가 불가능</strong>합니다. 부족하면 미리 보충해오세요.</p></div>
+        <div style="margin-bottom:20px;">
+            <h4 style="font-weight:800; margin-bottom:5px; color:#d63031;" data-i18n="tip_oil_title">🛢️ 엔진오일 부족 (검사불가)</h4>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_oil_desc">오일이 L선 이하로 없으면 검사 자체가 불가능합니다. 부족하면 미리 보충해오세요.</p>
+        </div>
         <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
-        <div style="margin-bottom:20px;"><h4 style="font-weight:800; margin-bottom:5px; color:#e17055;">💡 등화장치 (전구)</h4><p style="font-size:0.9rem; color:#555;">전구가 나간 경우, 출구 쪽에 있는 <strong>[셀프정비코너]</strong>로 가시면 <strong>도우미 서비스(외주)</strong>를 이용해 쉽게 교체할 수 있습니다.</p></div>
+        <div style="margin-bottom:20px;">
+            <h4 style="font-weight:800; margin-bottom:5px; color:#e17055;" data-i18n="tip_light_title">💡 등화장치 (전구)</h4>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_light_desc">전구가 나간 경우, 출구 쪽에 있는 [셀프정비코너]로 가시면 도우미 서비스(외주)를 이용해 쉽게 교체할 수 있습니다.</p>
+        </div>
     </div>
 </div>
 
 <script>
-    // i18n 데이터
+    // i18n Data
     const i18n = {
         ko: { 
             title: "스마트 대기실", subtitle: "대기 시간을 유익하게!<br>고객님의 합격을 지원합니다.",
+            btn_blackbox: "블랙박스 관리법", btn_alarm: "검사알림 신청",
             menu_retest: "재검사 패스트트랙", menu_retest_desc: "\"재검사 차량은 기다리지 마세요!\"",
             menu_fuel: "내 차 연료별 꿀팁", menu_fuel_desc: "경유/전기/휘발유 맞춤 관리",
             menu_check: "입장 전 체크", menu_check_desc: "차종별 준비사항",
             menu_tips: "부적합 방지", menu_tips_desc: "자주 나오는 불합격",
-            menu_feedback: "고객의 소리", menu_feedback_desc: "칭찬 / 불편 사항 접수"
+            menu_feedback: "고객의 소리", menu_feedback_desc: "칭찬 / 불편 사항 접수",
+            
+            sec_retest_title: "재검사 패스트트랙",
+            fast_track_title: "바로 출구로 오세요!",
+            fast_track_desc: "아래 항목 재검사는 대기줄을 서지 말고 바로 출구 쪽으로 오시면 됩니다.",
+            fast_item_1: "번호판등 / 제동등 / 방향지시등",
+            fast_item_2: "타이어 교체 확인",
+            slow_track_title: "입구 대기 필수!",
+            slow_track_desc: "전조등(헤드라이트) 재검사는 장비 측정이 필요하므로, 반드시 입구에서 줄을 서서 진입해야 합니다.",
+
+            sec_fuel_title: "연료별 맞춤 꿀팁", fuel_select_msg: "내 차의 연료를 선택하세요",
+            fuel_diesel_title: "🚙 경유차 (Diesel) 관리",
+            fuel_diesel_desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>흡기 크리닝:</strong> 8만km 마다 권장. 매연 감소에 효과적.</li><li><strong>연료필터:</strong> 4만km 마다 교체.</li><li><strong>공회전 금지:</strong> 대기 중 공회전(후까시)은 하지 마세요. 검사 모드에서 자연스럽게 매연을 배출시킵니다.</li></ul>",
+            fuel_gasoline_title: "🚗 휘발유/LPG 관리",
+            fuel_gasoline_desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>점화플러그:</strong> 엔진 떨림 시 교체 필요.</li><li><strong>엔진오일:</strong> F/L선 사이에 있는지 확인.</li><li><strong>산소센서:</strong> 배출가스 관련 주요 부품입니다.</li></ul>",
+            fuel_ev_title: "⚡ 전기차/수소차 (EV)",
+            fuel_ev_desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>배출가스 검사 면제:</strong> 검사 시간이 약 5분 단축됩니다.</li><li><strong>타이어:</strong> 차가 무거워 마모가 빠르니 철심 여부를 확인하세요.</li></ul>",
+            fuel_hybrid_title: "🌱 하이브리드 (Hybrid)",
+            fuel_hybrid_desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>엔진 구동:</strong> 검사 중 엔진이 강제로 켜질 수 있습니다.</li><li><strong>브레이크:</strong> 패드보다는 디스크 녹 발생 여부를 확인하세요.</li></ul>",
+
+            sec_check_title: "입장 전 1분 체크", car_select_msg: "내 차종을 선택하면 꿀팁을 드려요!",
+            car_ray_title: "트렁크 짐 비우기!", car_ray_desc: "모닝/레이는 <strong>차대번호가 트렁크 매트 아래</strong>에 있습니다.<br>짐을 비워주시면 검사가 빨라집니다.",
+            car_qm3_title: "수납공간 2곳 비우기!", car_qm3_desc: "1. 트렁크 바닥 (차대번호)<br>2. 센터페시아 하단 (진단단자)<br>이 두 곳을 꼭 비워주세요.",
+            car_truck_title: "적재함 확인!", car_truck_desc: "<strong>적재함에 무거운 짐</strong>이 있으면 제동력 검사가 부정확할 수 있습니다. <strong>공차 상태</strong>가 가장 좋습니다.",
+            car_normal_title: "기본 확인 완료", car_normal_desc: "귀중품만 챙겨주시면 됩니다. 편안하게 대기해 주세요!",
+
+            sec_tips_title: "부적합 방지 꿀팁",
+            tip_oil_title: "🛢️ 엔진오일 부족 (검사불가)", tip_oil_desc: "오일이 L선 이하로 없으면 <strong>검사 자체가 불가능</strong>합니다. 부족하면 미리 보충해오세요.",
+            tip_light_title: "💡 등화장치 (전구)", tip_light_desc: "전구가 나간 경우, 출구 쪽에 있는 <strong>[셀프정비코너]</strong>로 가시면 <strong>도우미 서비스(외주)</strong>를 이용해 쉽게 교체할 수 있습니다.",
+
+            bb_title: "블랙박스 관리 꿀팁", bb_desc: "사고 순간, 영상이 녹화되지 않아 낭패를 보는 경우가 많습니다.<br><br><strong>1. 주기적 포맷:</strong> 메모리 카드는 소모품입니다. 2주에 한 번은 포맷해 주세요.<br><strong>2. 생각난 김에 지금?:</strong> 대기하시는 동안 블랙박스 설정 메뉴에서 '포맷'을 진행해 보세요.",
+            
+            fb_good: "칭찬하기", fb_bad: "불편해요", fb_submit: "의견 보내기",
+            tag_kind: "💕 너무 친절해요", tag_fast: "🚀 처리가 빨라요", tag_detail: "📝 설명이 꼼꼼해요",
+            tag_wait: "🐢 대기가 길어요", tag_info: "📢 안내가 부족해요", tag_fac: "🚽 시설이 불편해요"
         },
         en: { 
-            title: "Smart Waiting Room", subtitle: "Make waiting time useful!",
+            title: "Smart Waiting Room", subtitle: "Turn waiting time into useful time!",
+            btn_blackbox: "Blackbox Tips", btn_alarm: "Notification",
             menu_retest: "Re-test Fast Track", menu_retest_desc: "Skip the line for simple re-tests!",
             menu_fuel: "Fuel Type Tips", menu_fuel_desc: "Diesel / EV / Gasoline",
             menu_check: "Pre-Check", menu_check_desc: "Preparation by car model",
             menu_tips: "Avoid Rejection", menu_tips_desc: "Common failure reasons",
-            menu_feedback: "Voice of Customer", menu_feedback_desc: "Compliments / Complaints"
+            menu_feedback: "Voice of Customer", menu_feedback_desc: "Compliments / Complaints",
+
+            sec_retest_title: "Re-test Fast Track",
+            fast_track_title: "Go straight to the Exit!",
+            fast_track_desc: "Simple re-test vehicles skip the line. Go directly to the exit.",
+            fast_item_1: "License Plate / Brake Lights",
+            fast_item_2: "Tire Check",
+            slow_track_title: "Wait in Line Required!",
+            slow_track_desc: "Headlight re-tests require precision equipment. You MUST wait in line.",
+
+            sec_fuel_title: "Fuel Type Tips", fuel_select_msg: "Select Your Fuel Type",
+            fuel_diesel_title: "🚙 Diesel Tips",
+            fuel_diesel_desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>Intake Cleaning:</strong> Recommended every 80k km.</li><li><strong>Fuel Filter:</strong> Replace every 40k km.</li><li><strong>No Idling:</strong> Please do not rev the engine while waiting. The test process handles it.</li></ul>",
+            fuel_gasoline_title: "🚗 Gasoline/LPG Tips", fuel_gasoline_desc: "Check spark plugs and engine oil levels.",
+            fuel_ev_title: "⚡ EV Tips", fuel_ev_desc: "No emission test. Shorter inspection time.",
+            fuel_hybrid_title: "🌱 Hybrid Tips", fuel_hybrid_desc: "Engine may start forcefully during inspection.",
+
+            sec_check_title: "Pre-Check", car_select_msg: "Select Your Car Model",
+            car_ray_title: "Empty Trunk!", car_ray_desc: "VIN is under the trunk mat. Please clear it.",
+            car_qm3_title: "Clear 2 Areas!", car_qm3_desc: "1. Trunk Floor (VIN) 2. Center Console (OBD)",
+            car_truck_title: "Check Cargo!", car_truck_desc: "Heavy cargo affects brake tests. Empty truck recommended.",
+            car_normal_title: "Basic Check", car_normal_desc: "Take valuables with you.",
+
+            sec_tips_title: "Avoid Rejection",
+            tip_oil_title: "🛢️ Low Engine Oil", tip_oil_desc: "Inspection impossible if oil is low. Please refill.",
+            tip_light_title: "💡 Lights", tip_light_desc: "For burnt bulbs, use the Self-Help Corner helper service (outsourced) at the exit.",
+
+            bb_title: "Blackbox Tips", bb_desc: "Format your memory card periodically to ensure recording.",
+            fb_good: "Compliment", fb_bad: "Complaint", fb_submit: "Submit",
+            tag_kind: "💕 Very Kind", tag_fast: "🚀 Fast", tag_detail: "📝 Detailed",
+            tag_wait: "🐢 Long Wait", tag_info: "📢 Poor Info", tag_fac: "🚽 Bad Facility"
         },
-        vi: { 
-            title: "Phòng chờ Thông minh", subtitle: "Biến thời gian chờ thành hữu ích!",
-            menu_retest: "Kiểm tra lại Nhanh", menu_retest_desc: "Không cần xếp hàng cho lỗi nhỏ!",
-            menu_fuel: "Mẹo nhiên liệu", menu_fuel_desc: "Dầu / Điện / Xăng",
-            menu_check: "Tự kiểm tra", menu_check_desc: "Chuẩn bị theo loại xe",
-            menu_tips: "Tránh bị Từ chối", menu_tips_desc: "Lý do trượt phổ biến",
-            menu_feedback: "Ý kiến khách hàng", menu_feedback_desc: "Khen ngợi / Khiếu nại"
-        },
-        cn: { 
-            title: "智能候车室", subtitle: "让等待时间更有价值！",
-            menu_retest: "复检快速通道", menu_retest_desc: "简单复检无需排队！",
-            menu_fuel: "燃料类型提示", menu_fuel_desc: "柴油 / 电动 / 汽油",
-            menu_check: "入场前检查", menu_check_desc: "各车型准备事项",
-            menu_tips: "避免不合格", menu_tips_desc: "常见不合格原因",
-            menu_feedback: "客户之声", menu_feedback_desc: "称赞 / 投诉"
-        }
+        // 베트남어, 중국어 데이터는 지면 관계상 생략 (동일한 구조로 추가 가능)
+        vi: { title: "Phòng chờ Thông minh", subtitle: "Biến thời gian chờ thành hữu ích!", btn_blackbox: "Mẹo Camera", btn_alarm: "Thông báo", menu_retest: "Kiểm tra lại Nhanh", menu_retest_desc: "Không cần xếp hàng!", menu_fuel: "Mẹo nhiên liệu", menu_fuel_desc: "Dầu / Điện / Xăng", menu_check: "Tự kiểm tra", menu_check_desc: "Chuẩn bị", menu_tips: "Tránh lỗi", menu_tips_desc: "Lý do trượt", menu_feedback: "Ý kiến", menu_feedback_desc: "Khen / Chê", sec_retest_title: "Lối đi nhanh", fast_track_title: "Đi thẳng ra lối ra!", fast_track_desc: "Xe kiểm tra lại lỗi nhỏ không cần xếp hàng.", fast_item_1: "Đèn biển số/phanh", fast_item_2: "Lốp xe", slow_track_title: "Phải xếp hàng!", slow_track_desc: "Kiểm tra đèn pha cần thiết bị, vui lòng xếp hàng.", sec_fuel_title: "Mẹo nhiên liệu", fuel_select_msg: "Chọn loại nhiên liệu", fuel_diesel_title: "🚙 Xe Dầu", fuel_diesel_desc: "Không rồ ga khi chờ. Vệ sinh họng hút mỗi 80k km.", fuel_gasoline_title: "🚗 Xe Xăng", fuel_gasoline_desc: "Kiểm tra bugi và dầu nhớt.", fuel_ev_title: "⚡ Xe Điện", fuel_ev_desc: "Không kiểm tra khí thải. Nhanh hơn 5 phút.", fuel_hybrid_title: "🌱 Xe Hybrid", fuel_hybrid_desc: "Động cơ có thể tự khởi động.", sec_check_title: "Tự kiểm tra", car_select_msg: "Chọn loại xe", car_ray_title: "Dọn cốp!", car_ray_desc: "Số khung nằm dưới thảm cốp.", car_qm3_title: "Dọn 2 chỗ!", car_qm3_desc: "Sàn cốp và hộc điều khiển.", car_truck_title: "Kiểm tra thùng!", car_truck_desc: "Nên để xe không tải.", car_normal_title: "Cơ bản", car_normal_desc: "Mang theo vật quý giá.", sec_tips_title: "Mẹo tránh trượt", tip_oil_title: "🛢️ Thiếu dầu", tip_oil_desc: "Không thể kiểm tra nếu thiếu dầu.", tip_light_title: "💡 Đèn xe", tip_light_desc: "Dùng dịch vụ hỗ trợ tại lối ra để thay bóng.", bb_title: "Mẹo Camera", bb_desc: "Định dạng thẻ nhớ định kỳ.", fb_good: "Khen ngợi", fb_bad: "Khiếu nại", fb_submit: "Gửi", tag_kind: "Thân thiện", tag_fast: "Nhanh", tag_detail: "Chi tiết", tag_wait: "Chờ lâu", tag_info: "Thiếu tin", tag_fac: "Cơ sở kém" },
+        cn: { title: "智能候车室", subtitle: "有益的等待时间！", btn_blackbox: "行车记录仪", btn_alarm: "通知申请", menu_retest: "复检通道", menu_retest_desc: "无需排队！", menu_fuel: "燃料提示", menu_fuel_desc: "柴油/电动/汽油", menu_check: "事前检查", menu_check_desc: "准备", menu_tips: "避免不合格", menu_tips_desc: "常见原因", menu_feedback: "客户之声", menu_feedback_desc: "称赞/投诉", sec_retest_title: "复检快速通道", fast_track_title: "直接去出口！", fast_track_desc: "简单复检无需排队。", fast_item_1: "牌照灯/刹车灯", fast_item_2: "轮胎", slow_track_title: "必须排队！", slow_track_desc: "大灯复检需要设备，请排队。", sec_fuel_title: "燃料提示", fuel_select_msg: "选择燃料", fuel_diesel_title: "🚙 柴油车", fuel_diesel_desc: "请勿空转轰油门。建议每8万公里清洗进气。", fuel_gasoline_title: "🚗 汽油车", fuel_gasoline_desc: "检查火花塞和机油。", fuel_ev_title: "⚡ 电动车", fuel_ev_desc: "免尾气检查。", fuel_hybrid_title: "🌱 混动车", fuel_hybrid_desc: "发动机可能会启动。", sec_check_title: "事前检查", car_select_msg: "选择车型", car_ray_title: "清理后备箱！", car_ray_desc: "车架号在后备箱下。", car_qm3_title: "清理两处！", car_qm3_desc: "后备箱底和中控台下。", car_truck_title: "确认货箱！", car_truck_desc: "建议空车状态。", car_normal_title: "基本", car_normal_desc: "保管好贵重物品。", sec_tips_title: "避免不合格", tip_oil_title: "🛢️ 机油不足", tip_oil_desc: "机油不足无法检查。", tip_light_title: "💡 车灯", tip_light_desc: "可在出口处使用辅助服务更换。", bb_title: "记录仪提示", bb_desc: "请定期格式化存储卡。", fb_good: "称赞", fb_bad: "不满", fb_submit: "发送", tag_kind: "亲切", tag_fast: "快速", tag_detail: "详细", tag_wait: "等待久", tag_info: "信息少", tag_fac: "设施差" }
     };
     let currentLang = 'ko';
 
     function setLang(lang) {
         currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        const buttons = document.querySelectorAll('.lang-btn');
-        buttons.forEach(btn => {
-            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${lang}'`)) btn.classList.add('active');
+        // Refactored active toggle
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
         });
+        
+        // Update static text
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if(i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
         });
+
+        // Update dynamic content if open
+        const activeFuelBtn = document.querySelector('#fuel .select-btn.active');
+        if (activeFuelBtn) {
+            const type = activeFuelBtn.getAttribute('onclick').match(/'([^']+)'/)[1];
+            showFuelGuide(type);
+        }
+        const activeCarBtn = document.querySelector('#check .select-btn.active');
+        if (activeCarBtn) {
+            const type = activeCarBtn.getAttribute('onclick').match(/'([^']+)'/)[1];
+            showCarGuide(type);
+        }
     }
 
-    function openSection(id) { document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function closeSection(id) { document.getElementById(id).classList.remove('active'); }
+    function openSection(id) { 
+        document.getElementById(id).classList.add('active'); 
+        window.scrollTo(0,0);
+        
+        // Speak section title
+        const titleKey = id === 'fuel' ? 'sec_fuel_title' : 
+                         id === 'check' ? 'sec_check_title' : 
+                         id === 'retest' ? 'sec_retest_title' : 
+                         id === 'reject_tips' ? 'sec_tips_title' : 'menu_' + id;
+                         
+        if(isVoiceOn && i18n[currentLang][titleKey]) {
+            speak(i18n[currentLang][titleKey]);
+        }
+    }
+    
+    function closeSection(id) { document.getElementById(id).classList.remove('active'); window.speechSynthesis.cancel(); }
 
-    // TTS
     let isVoiceOn = false;
     function toggleVoice() {
         isVoiceOn = !isVoiceOn;
@@ -286,61 +392,66 @@
         if(!isVoiceOn) return;
         window.speechSynthesis.cancel();
         const ut = new SpeechSynthesisUtterance(text);
-        ut.lang = 'ko-KR';
+        ut.lang = currentLang === 'ko' ? 'ko-KR' : (currentLang === 'cn' ? 'zh-CN' : (currentLang === 'vi' ? 'vi-VN' : 'en-US'));
         window.speechSynthesis.speak(ut);
     }
 
-    // 연료별 가이드
-    const fuelData = {
-        diesel: { title: "🚙 경유차 (Diesel) 관리", desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>흡기 크리닝:</strong> 8만km 마다 권장. 매연 감소에 효과적.</li><li><strong>연료필터:</strong> 4만km 마다 교체.</li><li><strong>팁:</strong> 검사 전 공회전(가속)을 해주면 매연 배출에 도움됩니다.</li></ul>" },
-        gasoline: { title: "🚗 휘발유/LPG 관리", desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>점화플러그:</strong> 엔진 떨림 시 교체 필요.</li><li><strong>엔진오일:</strong> F/L선 사이에 있는지 확인.</li><li><strong>산소센서:</strong> 배출가스 관련 주요 부품입니다.</li></ul>" },
-        ev: { title: "⚡ 전기차/수소차 (EV)", desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>배출가스 검사 면제:</strong> 검사 시간이 약 5분 단축됩니다.</li><li><strong>타이어:</strong> 차가 무거워 마모가 빠르니 철심 여부를 확인하세요.</li></ul>" },
-        hybrid: { title: "🌱 하이브리드 (Hybrid)", desc: "<ul style='padding-left:20px; font-size:0.9rem;'><li><strong>엔진 구동:</strong> 검사 중 엔진이 강제로 켜질 수 있습니다.</li><li><strong>브레이크:</strong> 패드보다는 디스크 녹 발생 여부를 확인하세요.</li></ul>" }
-    };
+    // Modal Logic
+    function openModal(id) { document.getElementById('modal-'+id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById('modal-'+id).style.display = 'none'; }
+
+    // Fuel Guide
     function showFuelGuide(type) {
         document.querySelectorAll('#fuel .select-btn').forEach(b => b.classList.remove('active'));
         const clickedBtn = Array.from(document.querySelectorAll('#fuel .select-btn')).find(btn => btn.getAttribute('onclick').includes(`'${type}'`));
         if (clickedBtn) clickedBtn.classList.add('active');
         const box = document.getElementById('fuel-guide-box');
         box.style.display = 'block';
-        document.getElementById('fuel-title').innerHTML = fuelData[type].title;
-        document.getElementById('fuel-desc').innerHTML = fuelData[type].desc;
+        
+        // Dynamic Data Fetch
+        const titleKey = `fuel_${type}_title`;
+        const descKey = `fuel_${type}_desc`;
+        
+        document.getElementById('fuel-title').innerHTML = i18n[currentLang][titleKey];
+        document.getElementById('fuel-desc').innerHTML = i18n[currentLang][descKey];
     }
 
-    // 차종별 가이드
-    const carData = {
-        ray: { title: "트렁크 짐 비우기!", desc: "모닝/레이는 <strong>차대번호가 트렁크 매트 아래</strong>에 있습니다.<br>짐을 비워주시면 검사가 빨라집니다." },
-        qm3: { title: "수납공간 2곳 비우기!", desc: "1. 트렁크 바닥 (차대번호)<br>2. 센터페시아 하단 (진단단자)<br>이 두 곳을 꼭 비워주세요." },
-        truck: { title: "적재함 확인!", desc: "<strong>적재함에 무거운 짐</strong>이 있으면 제동력 검사가 부정확할 수 있습니다. <strong>공차 상태</strong>가 가장 좋습니다." },
-        normal: { title: "기본 확인 완료", desc: "귀중품만 챙겨주시면 됩니다. 편안하게 대기해 주세요!" }
-    };
+    // Car Guide
     function showCarGuide(type) {
         document.querySelectorAll('#check .select-btn').forEach(b => b.classList.remove('active'));
         const clickedBtn = Array.from(document.querySelectorAll('#check .select-btn')).find(btn => btn.getAttribute('onclick').includes(`'${type}'`));
         if (clickedBtn) clickedBtn.classList.add('active');
         const box = document.getElementById('car-guide-box');
         box.style.display = 'block';
-        document.getElementById('car-title').innerHTML = carData[type].title;
-        document.getElementById('car-desc').innerHTML = carData[type].desc;
+        
+        const titleKey = `car_${type}_title`;
+        const descKey = `car_${type}_desc`;
+        
+        document.getElementById('car-title').innerHTML = i18n[currentLang][titleKey];
+        document.getElementById('car-desc').innerHTML = i18n[currentLang][descKey];
     }
 
-    // 고객의 소리 로직
+    // Feedback Logic (Refactored)
     function setFeedbackType(type) {
-        document.querySelectorAll('.fb-tab').forEach(t => t.classList.remove('active'));
+        const tabGood = document.querySelector('.fb-tab.good');
+        const tabBad = document.querySelector('.fb-tab.bad');
+        
+        tabGood.classList.remove('active');
+        tabBad.classList.remove('active');
+        
         if(type === 'good') {
-            document.querySelector('.fb-tab.good').classList.add('active');
+            tabGood.classList.add('active');
             document.getElementById('fb-tags-good').style.display = 'flex';
             document.getElementById('fb-tags-bad').style.display = 'none';
         } else {
-            document.querySelector('.fb-tab').nextElementSibling.classList.add('active'); // bad tab
-            document.querySelector('.fb-tab.good').nextElementSibling.classList.add('bad');
+            tabBad.classList.add('active');
             document.getElementById('fb-tags-good').style.display = 'none';
             document.getElementById('fb-tags-bad').style.display = 'flex';
         }
     }
     function toggleTag(el) { el.classList.toggle('selected'); }
     function submitFeedback() {
-        alert("소중한 의견 감사합니다!\n더 나은 서비스로 보답하겠습니다.");
+        alert("소중한 의견 감사합니다!");
         closeSection('feedback');
     }
 
