@@ -475,18 +475,18 @@ function updateWaitTime() {
         timeMsg = "오후 검사 대기 중";
         congestionWidth = "80%";
     } 
-    // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 9~10시, 오후 2~3시)
-    else if ((day === 1 && hour < 12) || (hour >= 9 && hour <= 10) || (hour >= 14 && hour <= 15)) {
+    // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 10~10시, 오후 2~3시)
+    else if ((day === 1 && hour < 12) || (hour >= 10 && hour <= 11) || (hour >= 14 && hour <= 15)) {
         status = "혼잡";
         color = "#dc3545"; // 빨강
-        timeMsg = "약 40분 이상 소요";
+        timeMsg = "약 30분 소요";
         congestionWidth = "90%";
     } 
     // 3. 마감 임박 (오후 5시 30분 이후)
     else if (hour >= 17 && min >= 30) {
-        status = "마감임박";
+        status = "접수마감";
         color = "#dc3545"; 
-        timeMsg = "접수 마감 주의";
+        timeMsg = "접수가 마감되었습니다.";
         congestionWidth = "95%";
     }
     // 4. 그 외 원활
