@@ -518,7 +518,7 @@ function updateWaitTime() {
         congestionWidth = "80%";
     } 
     // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 9~10시, 오후 2~3시)
-    else if ((day === 1 && hour < 12) || (hour >= 9 && hour <= 10) || (hour >= 14 && hour <= 15)) {
+    else if ((day === 1 && hour < 12) || (hour >= 10 && hour <= 11) || (hour >= 14 && hour <= 15)) {
         status = "혼잡";
         color = "#dc3545"; // 빨강
         timeMsg = "약 30분 소요";
