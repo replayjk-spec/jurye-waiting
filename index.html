@@ -456,6 +456,81 @@
     }
 
     setLang('ko');
+  // === [NEW] 대기시간 예측 시스템 (통계 기반) ===
+function updateWaitTime() {
+    const now = new Date();
+    const day = now.getDay(); // 0:일, 1:월, ... 6:토
+    const hour = now.getHours();
+    const min = now.getMinutes();
+
+    let status = "보통";
+    let color = "#28a745"; // 초록
+    let timeMsg = "약 20분 소요";
+    let congestionWidth = "50%"; // 게이지 바 길이
+
+    // 1. 점심시간 (11:50 ~ 13:00)
+    if (hour === 12 || (hour === 11 && min >= 50)) {
+        status = "점심시간";
+        color = "#fd7e14"; // 주황
+        timeMsg = "오후 검사 대기 중";
+        congestionWidth = "80%";
+    } 
+    // 2. 혼잡 시간대 (월요일 오전 or 매일 오전 9~10시, 오후 2~3시)
+    else if ((day === 1 && hour < 12) || (hour >= 9 && hour <= 10) || (hour >= 14 && hour <= 15)) {
+        status = "혼잡";
+        color = "#dc3545"; // 빨강
+        timeMsg = "약 40분 이상 소요";
+        congestionWidth = "90%";
+    } 
+    // 3. 마감 임박 (오후 5시 30분 이후)
+    else if (hour >= 17 && min >= 30) {
+        status = "마감임박";
+        color = "#dc3545"; 
+        timeMsg = "접수 마감 주의";
+        congestionWidth = "95%";
+    }
+    // 4. 그 외 원활
+    else {
+        status = "원활";
+        color = "#28a745"; // 초록
+        timeMsg = "약 15분 이내 소요";
+        congestionWidth = "30%";
+    }
+
+    // 화면에 표시할 HTML 생성
+    const waitHtml = `
+        <div style="background:white; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #eee; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <span style="font-size:0.9rem; color:#666; font-weight:600;">현재 대기 현황</span>
+                <span style="font-size:0.85rem; color:#888;">${hour}시 ${min}분 기준</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem; font-weight:800; color:${color};">${status}</span>
+                <span style="font-size:1rem; font-weight:600; color:#333;">${timeMsg}</span>
+            </div>
+            <div style="width:100%; height:8px; background:#e9ecef; border-radius:10px; margin-top:10px; overflow:hidden;">
+                <div style="width:${congestionWidth}; height:100%; background:${color}; border-radius:10px; transition: width 1s;"></div>
+            </div>
+        </div>
+    `;
+
+    // 헤더 바로 아래(content 시작 부분)에 삽입
+    const contentDiv = document.querySelector('.content');
+    const existingWidget = document.getElementById('wait-widget');
+    
+    if(existingWidget) existingWidget.remove(); // 기존 것 삭제 (중복 방지)
+    
+    const widgetDiv = document.createElement('div');
+    widgetDiv.id = 'wait-widget';
+    widgetDiv.innerHTML = waitHtml;
+    
+    // 안전 캠페인 버튼 위에 삽입
+    contentDiv.insertBefore(widgetDiv, contentDiv.firstChild);
+}
+
+// 페이지 로드 시 실행 및 1분마다 갱신
+updateWaitTime();
+setInterval(updateWaitTime, 60000);
 </script>
 </body>
 </html>
