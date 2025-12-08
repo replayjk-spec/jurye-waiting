@@ -239,20 +239,17 @@
     <div class="section-body">
         <div style="margin-bottom:20px;">
             <h4 style="font-weight:800; margin-bottom:5px; color:#d63031;" data-i18n="tip_oil_title">🛢️ 엔진오일 부족 (검사불가)</h4>
-            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_oil_desc">오일이 L선 이하로 없으면 검사 자체가 불가능합니다. 부족하면 미리 보충해오세요.</p>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_oil_desc">오일이 L선 이하로 없으면 <strong>검사 자체가 불가능</strong>합니다. 부족하면 미리 보충해오세요.</p>
         </div>
         <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
         <div style="margin-bottom:20px;">
             <h4 style="font-weight:800; margin-bottom:5px; color:#e17055;" data-i18n="tip_light_title">💡 등화장치 (전구)</h4>
-            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_light_desc">전구가 나간 경우, 출구 쪽에 있는 [셀프정비코너]로 가시면 도우미 서비스(외주)를 이용해 쉽게 교체할 수 있습니다.</p>
+            <p style="font-size:0.9rem; color:#555;" data-i18n="tip_light_desc">전구가 나간 경우, 출구 쪽에 있는 <strong>[셀프정비코너]</strong>로 가시면 <strong>도우미 서비스(외주)</strong>를 이용해 쉽게 교체할 수 있습니다.</p>
         </div>
     </div>
 </div>
 
 <script>
-    // ------------------------------------------
-    //  Google Apps Script URL (데이터 전송용)
-    // ------------------------------------------
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNn8xzeeQpprjtma4PcOV9yaXP4WB6g3uJZ9L7PC8nQOuvGvnLFter1b7yl5u_SDlf/exec";
 
     // i18n Data
@@ -300,14 +297,15 @@
             tag_kind: "💕 너무 친절해요", tag_fast: "🚀 처리가 빨라요", tag_detail: "📝 설명이 꼼꼼해요",
             tag_wait: "🐢 대기가 길어요", tag_info: "📢 안내가 부족해요", tag_fac: "🚽 시설이 불편해요",
 
-            // [NEW] 대기현황 다국어
+            // [NEW] 대기현황 다국어 - 구체적 시간 명시
+            w_title: "실시간 대기현황",
             w_prep: "검사 준비중", w_prep_msg: "장비 점검 후 09시부터 시작합니다!",
             w_lunch: "점심시간", w_lunch_msg: "오후 검사는 13:00부터 시작됩니다.",
             w_closed: "접수 마감", w_closed_msg: "금일 접수가 마감되었습니다.",
             w_soon: "마감 임박", w_soon_msg: "곧 접수가 마감됩니다. 서둘러 주세요!",
-            w_busy: "혼잡", w_busy_msg: "30분 이상 소요될 수 있습니다.<br>최대한 빨리 검사해 드리겠습니다!",
-            w_good: "원활", w_good_msg: "대기시간 10분 이내! 바로 진입 가능합니다.",
-            w_norm: "보통", w_norm_msg: "현재 검사가 순조롭게 진행 중입니다."
+            w_busy: "혼잡", w_busy_msg: "현재 <strong>20분 이상</strong> 소요될 수 있습니다. 양해 부탁드립니다.",
+            w_good: "원활", w_good_msg: "대기시간 <strong>10분 이내</strong>! 바로 진입 가능합니다.",
+            w_norm: "보통", w_norm_msg: "대기시간 <strong>약 15분</strong> 소요됩니다."
         },
         en: { 
             title: "Smart Waiting Room", subtitle: "Turn waiting time into useful time!",
@@ -348,16 +346,29 @@
             tag_kind: "💕 Very Kind", tag_fast: "🚀 Fast", tag_detail: "📝 Detailed",
             tag_wait: "🐢 Long Wait", tag_info: "📢 Poor Info", tag_fac: "🚽 Bad Facility",
 
+            w_title: "Wait Status",
             w_prep: "Preparing", w_prep_msg: "Inspection starts at 09:00.",
             w_lunch: "Lunch Time", w_lunch_msg: "Afternoon session starts at 13:00.",
             w_closed: "Closed", w_closed_msg: "Registration has closed for today.",
             w_soon: "Closing Soon", w_soon_msg: "Registration closing soon. Hurry up!",
-            w_busy: "Busy", w_busy_msg: "Wait time > 30 mins. We are doing our best!",
-            w_good: "Good", w_good_msg: "Less than 10 mins wait. Enter now!",
-            w_norm: "Normal", w_norm_msg: "Inspection is proceeding smoothly."
+            w_busy: "Busy", w_busy_msg: "Wait time <strong>> 20 mins</strong>. Thanks for waiting.",
+            w_good: "Good", w_good_msg: "Wait time <strong>< 10 mins</strong>. Enter now!",
+            w_norm: "Normal", w_norm_msg: "Wait time <strong>approx. 15 mins</strong>."
         },
-        vi: { title: "Phòng chờ Thông minh", subtitle: "Biến thời gian chờ thành hữu ích!", btn_blackbox: "Mẹo Camera", btn_alarm: "Thông báo", menu_retest: "Kiểm tra lại Nhanh", menu_retest_desc: "Không cần xếp hàng!", menu_fuel: "Mẹo nhiên liệu", menu_fuel_desc: "Dầu / Điện / Xăng", menu_check: "Tự kiểm tra", menu_check_desc: "Chuẩn bị theo loại xe", menu_tips: "Tránh bị Từ chối", menu_tips_desc: "Lý do trượt phổ biến", menu_feedback: "Ý kiến khách hàng", menu_feedback_desc: "Khen ngợi / Khiếu nại", sec_retest_title: "Lối đi nhanh", fast_track_title: "Đi thẳng đến Lối ra!", fast_track_desc: "Xe kiểm tra lại lỗi đơn giản không cần xếp hàng. Hãy đi thẳng đến lối ra.", fast_item_1: "Đèn biển số/phanh", fast_item_2: "Kiểm tra lốp", slow_track_title: "Phải xếp hàng!", slow_track_desc: "Kiểm tra lại đèn pha cần thiết bị. Bạn PHẢI xếp hàng.", sec_fuel_title: "Mẹo nhiên liệu", fuel_select_msg: "Chọn loại nhiên liệu", fuel_diesel_title: "🚙 Xe Dầu", fuel_diesel_desc: "Không rồ ga khi chờ. Vệ sinh họng hút mỗi 80k km.", fuel_gasoline_title: "🚗 Xe Xăng", fuel_gasoline_desc: "Kiểm tra bugi và dầu nhớt.", fuel_ev_title: "⚡ Xe Điện", fuel_ev_desc: "Không kiểm tra khí thải. Nhanh hơn 5 phút.", fuel_hybrid_title: "🌱 Xe Hybrid", fuel_hybrid_desc: "Động cơ có thể tự khởi động.", sec_check_title: "Tự kiểm tra", car_select_msg: "Chọn loại xe", car_ray_title: "Dọn cốp!", car_ray_desc: "Số khung nằm dưới thảm cốp.", car_qm3_title: "Dọn 2 chỗ!", car_qm3_desc: "Sàn cốp và hộc điều khiển.", car_truck_title: "Kiểm tra thùng!", car_truck_desc: "Nên để xe không tải.", car_normal_title: "Cơ bản", car_normal_desc: "Mang theo vật quý giá.", sec_tips_title: "Mẹo tránh trượt", tip_oil_title: "🛢️ Thiếu dầu", tip_oil_desc: "Không thể kiểm tra nếu thiếu dầu.", tip_light_title: "💡 Đèn xe", tip_light_desc: "Dùng dịch vụ hỗ trợ tại lối ra để thay bóng.", bb_title: "Mẹo Camera", bb_desc: "Định dạng thẻ nhớ định kỳ.", fb_good: "Khen ngợi", fb_bad: "Khiếu nại", fb_submit: "Gửi", tag_kind: "Thân thiện", tag_fast: "Nhanh", tag_detail: "Chi tiết", tag_wait: "Chờ lâu", tag_info: "Thiếu tin", tag_fac: "Cơ sở kém", w_prep: "Chuẩn bị", w_prep_msg: "Bắt đầu lúc 09:00.", w_lunch: "Giờ trưa", w_lunch_msg: "Chiều bắt đầu lúc 13:00.", w_closed: "Đã đóng", w_closed_msg: "Đã hết giờ nhận xe.", w_soon: "Sắp đóng", w_soon_msg: "Sắp hết giờ. Nhanh lên!", w_busy: "Đông", w_busy_msg: "Chờ > 30 phút. Đang cố gắng!", w_good: "Tốt", w_good_msg: "< 10 phút. Vào ngay!", w_norm: "Bình thường", w_norm_msg: "Đang tiến hành suôn sẻ." },
-        cn: { title: "智能候车室", subtitle: "有益的等待时间！", btn_blackbox: "行车记录仪", btn_alarm: "通知申请", menu_retest: "复检通道", menu_retest_desc: "无需排队！", menu_fuel: "燃料提示", menu_fuel_desc: "柴油/电动/汽油", menu_check: "事前检查", menu_check_desc: "各车型准备事项", menu_tips: "避免不合格", menu_tips_desc: "常见不合格原因", menu_feedback: "客户之声", menu_feedback_desc: "称赞 / 投诉", sec_retest_title: "复检快速通道", fast_track_title: "直接去出口！", fast_track_desc: "简单复检无需排队。请直接前往出口。", fast_item_1: "牌照灯/刹车灯", fast_item_2: "确认轮胎更换", slow_track_title: "必须排队！", slow_track_desc: "大灯复检需要精密设备，务必排队进场。", sec_fuel_title: "燃料提示", fuel_select_msg: "选择燃料", fuel_diesel_title: "🚙 柴油车", fuel_diesel_desc: "请勿空转轰油门。建议每8万公里清洗进气。", fuel_gasoline_title: "🚗 汽油车", fuel_gasoline_desc: "检查火花塞和机油。", fuel_ev_title: "⚡ 电动车", fuel_ev_desc: "免尾气检查。缩短5分钟。", fuel_hybrid_title: "🌱 混动车", fuel_hybrid_desc: "发动机可能会强制启动。", sec_check_title: "事前检查", car_select_msg: "选择车型", car_ray_title: "清理后备箱！", car_ray_desc: "车架号在后备箱垫下。", car_qm3_title: "清理两处！", car_qm3_desc: "后备箱底和中控台下。", car_truck_title: "确认货箱！", car_truck_desc: "建议空车状态。", car_normal_title: "基本", car_normal_desc: "保管好贵重物品。", sec_tips_title: "避免不合格", tip_oil_title: "🛢️ 机油不足", tip_oil_desc: "机油不足无法检查。", tip_light_title: "💡 车灯", tip_light_desc: "可在出口处使用辅助服务更换。", bb_title: "记录仪提示", bb_desc: "请定期格式化存储卡。", fb_good: "称赞", fb_bad: "不满", fb_submit: "发送", tag_kind: "亲切", tag_fast: "快速", tag_detail: "详细", tag_wait: "等待久", tag_info: "信息少", tag_fac: "设施差", w_prep: "准备中", w_prep_msg: "09:00 开始。", w_lunch: "午休", w_lunch_msg: "下午 13:00 开始。", w_closed: "已结束", w_closed_msg: "今日接收已结束。", w_soon: "即将结束", w_soon_msg: "快结束了。请抓紧！", w_busy: "拥堵", w_busy_msg: "需等待30分钟以上。", w_good: "畅通", w_good_msg: "10分钟以内。请进入！", w_norm: "正常", w_norm_msg: "检查顺利进行中。" }
+        vi: { title: "Phòng chờ Thông minh", subtitle: "Biến thời gian chờ thành hữu ích!", btn_blackbox: "Mẹo Camera", btn_alarm: "Thông báo", menu_retest: "Kiểm tra lại Nhanh", menu_retest_desc: "Không cần xếp hàng!", menu_fuel: "Mẹo nhiên liệu", menu_fuel_desc: "Dầu / Điện / Xăng", menu_check: "Tự kiểm tra", menu_check_desc: "Chuẩn bị theo loại xe", menu_tips: "Tránh bị Từ chối", menu_tips_desc: "Lý do trượt phổ biến", menu_feedback: "Ý kiến khách hàng", menu_feedback_desc: "Khen ngợi / Khiếu nại", sec_retest_title: "Lối đi nhanh", fast_track_title: "Đi thẳng đến Lối ra!", fast_track_desc: "Xe kiểm tra lại lỗi đơn giản không cần xếp hàng. Hãy đi thẳng đến lối ra.", fast_item_1: "Đèn biển số/phanh", fast_item_2: "Kiểm tra lốp", slow_track_title: "Phải xếp hàng!", slow_track_desc: "Kiểm tra lại đèn pha cần thiết bị. Bạn PHẢI xếp hàng.", sec_fuel_title: "Mẹo nhiên liệu", fuel_select_msg: "Chọn loại nhiên liệu", fuel_diesel_title: "🚙 Xe Dầu", fuel_diesel_desc: "Không rồ ga khi chờ. Vệ sinh họng hút mỗi 80k km.", fuel_gasoline_title: "🚗 Xe Xăng", fuel_gasoline_desc: "Kiểm tra bugi và dầu nhớt.", fuel_ev_title: "⚡ Xe Điện", fuel_ev_desc: "Không kiểm tra khí thải. Nhanh hơn 5 phút.", fuel_hybrid_title: "🌱 Xe Hybrid", fuel_hybrid_desc: "Động cơ có thể tự khởi động.", sec_check_title: "Tự kiểm tra", car_select_msg: "Chọn loại xe", car_ray_title: "Dọn cốp!", car_ray_desc: "Số khung nằm dưới thảm cốp.", car_qm3_title: "Dọn 2 chỗ!", car_qm3_desc: "Sàn cốp và hộc điều khiển.", car_truck_title: "Kiểm tra thùng!", car_truck_desc: "Nên để xe không tải.", car_normal_title: "Cơ bản", car_normal_desc: "Mang theo vật quý giá.", sec_tips_title: "Mẹo tránh trượt", tip_oil_title: "🛢️ Thiếu dầu", tip_oil_desc: "Không thể kiểm tra nếu thiếu dầu.", tip_light_title: "💡 Đèn xe", tip_light_desc: "Dùng dịch vụ hỗ trợ tại lối ra để thay bóng.", bb_title: "Mẹo Camera", bb_desc: "Định dạng thẻ nhớ định kỳ.", fb_good: "Khen ngợi", fb_bad: "Khiếu nại", fb_submit: "Gửi", tag_kind: "Thân thiện", tag_fast: "Nhanh", tag_detail: "Chi tiết", tag_wait: "Chờ lâu", tag_info: "Thiếu tin", tag_fac: "Cơ sở kém", 
+            w_title: "Trạng thái",
+            w_prep: "Chuẩn bị", w_prep_msg: "Bắt đầu lúc 09:00.", w_lunch: "Giờ trưa", w_lunch_msg: "Chiều bắt đầu lúc 13:00.", w_closed: "Đã đóng", w_closed_msg: "Đã hết giờ nhận xe.", w_soon: "Sắp đóng", w_soon_msg: "Sắp hết giờ. Nhanh lên!", 
+            w_busy: "Đông", w_busy_msg: "Chờ <strong>> 20 phút</strong>. Đang cố gắng!", 
+            w_good: "Tốt", w_good_msg: "Chờ <strong>< 10 phút</strong>. Vào ngay!", 
+            w_norm: "Bình thường", w_norm_msg: "Chờ <strong>khoảng 15 phút</strong>." 
+        },
+        cn: { title: "智能候车室", subtitle: "有益的等待时间！", btn_blackbox: "行车记录仪", btn_alarm: "通知申请", menu_retest: "复检通道", menu_retest_desc: "无需排队！", menu_fuel: "燃料提示", menu_fuel_desc: "柴油/电动/汽油", menu_check: "事前检查", menu_check_desc: "各车型准备事项", menu_tips: "避免不合格", menu_tips_desc: "常见不合格原因", menu_feedback: "客户之声", menu_feedback_desc: "称赞 / 投诉", sec_retest_title: "复检快速通道", fast_track_title: "直接去出口！", fast_track_desc: "简单复检无需排队。请直接前往出口。", fast_item_1: "牌照灯/刹车灯", fast_item_2: "确认轮胎更换", slow_track_title: "必须排队！", slow_track_desc: "大灯复检需要精密设备，务必排队进场。", sec_fuel_title: "燃料提示", fuel_select_msg: "选择燃料", fuel_diesel_title: "🚙 柴油车", fuel_diesel_desc: "请勿空转轰油门。建议每8万公里清洗进气。", fuel_gasoline_title: "🚗 汽油车", fuel_gasoline_desc: "检查火花塞和机油。", fuel_ev_title: "⚡ 电动车", fuel_ev_desc: "免尾气检查。缩短5分钟。", fuel_hybrid_title: "🌱 混动车", fuel_hybrid_desc: "发动机可能会强制启动。", sec_check_title: "事前检查", car_select_msg: "选择车型", car_ray_title: "清理后备箱！", car_ray_desc: "车架号在后备箱垫下。", car_qm3_title: "清理两处！", car_qm3_desc: "后备箱底和中控台下。", car_truck_title: "确认货箱！", car_truck_desc: "建议空车状态。", car_normal_title: "基本", car_normal_desc: "保管好贵重物品。", sec_tips_title: "避免不合格", tip_oil_title: "🛢️ 机油不足", tip_oil_desc: "机油不足无法检查。", tip_light_title: "💡 车灯", tip_light_desc: "可在出口处使用辅助服务更换。", bb_title: "记录仪提示", bb_desc: "请定期格式化存储卡。", fb_good: "称赞", fb_bad: "不满", fb_submit: "发送", tag_kind: "亲切", tag_fast: "快速", tag_detail: "详细", tag_wait: "等待久", tag_info: "信息少", tag_fac: "设施差", 
+            w_title: "实时状态",
+            w_prep: "准备中", w_prep_msg: "09:00 开始。", w_lunch: "午休", w_lunch_msg: "下午 13:00 开始。", w_closed: "已结束", w_closed_msg: "今日接收已结束。", w_soon: "即将结束", w_soon_msg: "快结束了。请抓紧！", 
+            w_busy: "拥堵", w_busy_msg: "需等待 <strong>20分钟以上</strong>。", 
+            w_good: "畅通", w_good_msg: "<strong>10分钟以内</strong>。请进入！", 
+            w_norm: "正常", w_norm_msg: "需等待 <strong>约15分钟</strong>。" 
+        }
     };
     let currentLang = 'ko';
 
@@ -517,7 +528,7 @@
         });
     }
 
-    // [NEW] 실시간 대기현황 위젯 (다국어 + 토요일 로직 반영)
+    // [NEW] 실시간 대기현황 위젯 (다국어 + 토요일 로직 + 시간 구체화 반영)
     function updateWaitTime() {
         const now = new Date();
         const day = now.getDay(); // 0:일, 1:월 ... 6:토
@@ -587,11 +598,12 @@
         // 렌더링
         const statusText = i18n[currentLang][statusKey];
         const msgText = i18n[currentLang][msgKey];
+        const titleText = i18n[currentLang]['w_title'];
 
         const html = `
             <div style="background:white; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #eee; box-shadow:0 2px 8px rgba(0,0,0,0.05); animation: fadeIn 0.5s;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:0.9rem; color:#555; font-weight:700;"><i class="fas fa-clock"></i> Live Status</span>
+                    <span style="font-size:0.9rem; color:#555; font-weight:700;"><i class="fas fa-clock"></i> ${titleText}</span>
                     <span style="font-size:0.8rem; color:#888;">${hour}:${min < 10 ? '0'+min : min}</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
