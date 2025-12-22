@@ -568,14 +568,19 @@
             btn.disabled = false;
         });
     }
-
+        // ... (아래 로직은 그대로 두세요) ...
     // [NEW] 실시간 대기현황 위젯 (다국어 + 토요일 로직 + 시간 구체화 반영)
-    function updateWaitTime() {
+    function updateWaitTime() {/*
         const now = new Date();
         const day = now.getDay(); // 0:일, 1:월 ... 6:토
         const hour = now.getHours();
         const min = now.getMinutes();
         const timeVal = hour * 100 + min;
+*/
+      
+        const day = 2;   // 0:일, 1:월, 2:화 ... 6:토
+        const hour = 09; // 15시 (오후 3시)
+        const min = 30;  // 30분
 
         let statusKey = "";
         let msgKey = "";
